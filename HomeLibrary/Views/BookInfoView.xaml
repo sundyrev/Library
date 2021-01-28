@@ -1,0 +1,57 @@
+﻿<UserControl x:Class="HomeLibrary.Views.BookInfoView"
+xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:mvvm="http://www.galasoft.ch/mvvmlight"
+        xmlns:ignore="http://www.ignore.com"
+        mc:Ignorable="d ignore"
+        DataContext="{Binding Main, Source={StaticResource Locator}}" Height="400" Width="1200">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="17*"/>
+            <RowDefinition Height="14*"/>
+            <RowDefinition Height="118*"/>
+            <RowDefinition Height="0*"/>
+        </Grid.RowDefinitions>
+        <TextBlock TextWrapping="Wrap"
+                    TextAlignment="Center" Text="Домашняя библиотека" FontWeight="Bold" FontSize="30" Margin="0,0,0.2,0.2"/>
+        <DataGrid x:Name="dgemp" Grid.Row="2" ItemsSource="{Binding Books}" 
+                 ColumnWidth="*"  Margin="0,10.2,-0.2,0.2" RenderTransformOrigin="0.5,0.5"
+                   IsReadOnly="True" AutoGenerateColumns="False" >
+
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Title, Mode=TwoWay}" Header="Название"/>
+                <DataGridTextColumn Binding="{Binding Author, Mode=TwoWay}" Header="Автор"/>
+                <DataGridTextColumn Binding="{Binding Genre.Title, Mode=TwoWay}" Header="Жанр"/>
+                <DataGridTextColumn Binding="{Binding PublicationYr, Mode=TwoWay}" Header="Год" Width="50"/>
+                <DataGridTextColumn Binding="{Binding Comment, Mode=TwoWay}" Header="Примечание"/>
+            </DataGrid.Columns>
+
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="SelectionChanged">
+                    <mvvm:EventToCommand 
+                    Command="{Binding  SendBookCommand, Mode=OneWay}"
+                    CommandParameter="{Binding ElementName=dgemp,Path=SelectedItem}"    
+                     />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </DataGrid>
+        <!--<TextBlock HorizontalAlignment="Left" Margin="10,6.8,0,0" Grid.Row="1" 
+                   TextWrapping="Wrap" Text="Поиск по автору:" VerticalAlignment="Top" 
+                   Width="231" Height="28"/>-->
+        <TextBox HorizontalAlignment="Left" Height="25" Margin="7,6.4,0,0" x:Name="searchBox" GotFocus="TextBox_GotFocus"
+                 Grid.Row="1" TextWrapping="Wrap"  Text="{Binding BookName, UpdateSourceTrigger=PropertyChanged}"
+                 VerticalAlignment="Top" Width="277">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="TextChanged">
+                    <mvvm:EventToCommand 
+                    Command="{Binding SearchCommand, Mode=OneWay}"
+                     />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </TextBox>
+    </Grid>
+</UserControl>
