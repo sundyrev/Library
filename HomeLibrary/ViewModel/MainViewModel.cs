@@ -13,6 +13,7 @@ namespace HomeLibrary.ViewModel
     {
         IDataAccessService _repo;
         ObservableCollection<Book> _books;
+        ObservableCollection<Genre> _genres;
 
         public ObservableCollection<Book> Books
         {
@@ -21,6 +22,16 @@ namespace HomeLibrary.ViewModel
             {
                 _books = value;
                 RaisePropertyChanged("Books");
+            }
+        }
+
+        public ObservableCollection<Genre> Genres
+        {
+            get { return _genres; }
+            set
+            {
+                _genres = value;
+                RaisePropertyChanged("Genres");
             }
         }
 
@@ -33,6 +44,18 @@ namespace HomeLibrary.ViewModel
             {
                 _book = value;
                 RaisePropertyChanged("Book");
+            }
+        }
+
+        Genre _genre;
+
+        public Genre Genre
+        {
+            get { return _genre; }
+            set
+            {
+                _genre = value;
+                RaisePropertyChanged("Genre");
             }
         }
 
@@ -63,7 +86,9 @@ namespace HomeLibrary.ViewModel
         {
             _repo = repo;
             Books = new ObservableCollection<Book>();
+            Genres = new ObservableCollection<Genre>();
             Book = new Book();
+            Genre = new Genre();
             ReadAllCommand = new RelayCommand(GetBooks);
             SaveCommand = new RelayCommand<Book>(SaveBook);
             DeleteCommand = new RelayCommand<Book>(DeleteBook);
@@ -71,7 +96,8 @@ namespace HomeLibrary.ViewModel
             SendBookCommand = new RelayCommand<Book>(SendBookInfo);
             ReceiveBookInfo();
             GetBooks();
-            BookName = "Поиск по названию...";
+            ReceiveGenreInfo();
+            GetGenres();
         }
 
         void GetBooks()
@@ -80,6 +106,15 @@ namespace HomeLibrary.ViewModel
             foreach (var item in _repo.GetBooks())
             {
                 Books.Add(item);
+            }
+        }
+
+        void GetGenres()
+        {
+            Genres.Clear();
+            foreach (var item in _repo.GetGenres())
+            {
+                Genres.Add(item);
             }
         }
 
@@ -122,6 +157,17 @@ namespace HomeLibrary.ViewModel
             }
         }
 
+        void SendGenreInfo(Genre g)
+        {
+            if (g != null)
+            {
+                Messenger.Default.Send<MessageCommunicator>(new MessageCommunicator()
+                {
+                    Genre = g
+                });
+            }
+        }
+
         void ReceiveBookInfo()
         {
             if (Book != null)
@@ -129,6 +175,17 @@ namespace HomeLibrary.ViewModel
                 Messenger.Default.Register<MessageCommunicator>(this, (emp) =>
                 {
                     this.Book = emp.Book;
+                });
+            }
+        }
+
+        void ReceiveGenreInfo()
+        {
+            if (Genre != null)
+            {
+                Messenger.Default.Register<MessageCommunicator>(this, (emp) =>
+                {
+                    this.Genre = emp.Genre;
                 });
             }
         }

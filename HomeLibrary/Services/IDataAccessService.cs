@@ -9,6 +9,7 @@ namespace HomeLibrary.Services
     public interface IDataAccessService
     {
         ObservableCollection<Book> GetBooks();
+        ObservableCollection<Genre> GetGenres();
         int CreateBook(Book book);
         void RemoveBook(Book book);
         bool IsExistsBook(Book book);

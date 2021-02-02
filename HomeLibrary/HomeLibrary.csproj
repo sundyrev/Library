@@ -114,6 +114,8 @@
     <Compile Include="Views\SaveBookView.xaml.cs">
       <DependentUpon>SaveBookView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Watermark\WatermarkAdorner.cs" />
+    <Compile Include="Watermark\WatermarkService.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

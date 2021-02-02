@@ -19,21 +19,28 @@
             <ColumnDefinition Width="7*"/>
             <ColumnDefinition Width="37*"/>
         </Grid.ColumnDefinitions>
-        <TextBlock Grid.Row="0" Grid.Column="0" TextWrapping="Wrap" Text="Автор:" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="76,30,75.2,0.4" Height="16" Width="36"/>
-        <TextBlock Grid.Row="0" Grid.Column="1" TextWrapping="Wrap" Text="Название:" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="98.8,30,95.6,0.4" Height="16" Width="56"/>
-        <TextBlock Grid.Row="0" Grid.Column="2" TextWrapping="Wrap" Text="Жанр:" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="90.4,30,88.4,0.4" Height="16" Width="34"/>
-        <TextBlock Grid.Row="0" Grid.Column="3" TextWrapping="Wrap" Text="Год издания:" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="8.6,30,7.6,0.4" Height="16" Width="71"/>
-        <TextBlock Grid.Row="0" Grid.Column="4" TextWrapping="Wrap" Text="Примечание:" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="194.4,30,195,0.4" Height="16" Width="73"/>
+        <TextBlock Grid.Row="0" Grid.Column="0" TextWrapping="Wrap" Text="Автор:" HorizontalAlignment="Center" VerticalAlignment="Center"  Height="16" Width="36" Margin="0,30,0,0" />
+        <TextBlock Grid.Row="0" Grid.Column="1" TextWrapping="Wrap" Text="Название:" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,30,0,0" Height="16" Width="56"/>
+        <TextBlock Grid.Row="0" Grid.Column="2" TextWrapping="Wrap" Text="Жанр:" VerticalAlignment="Center" HorizontalAlignment="Center" Height="16" Width="34" Margin="0,30,0,0" />
+        <TextBlock Grid.Row="0" Grid.Column="3" TextWrapping="Wrap" Text="Год издания:" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,30,0,0" Height="16" Width="71"/>
+        <TextBlock Grid.Row="0" Grid.Column="4" TextWrapping="Wrap" Text="Примечание:" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,30,0,0" Height="16" Width="73"/>
 
-        <TextBox Grid.Column="0" TextWrapping="Wrap" Text="{Binding Book.Author, Mode=TwoWay}" Height="25" VerticalAlignment="Center" Margin="10,3.941,9.2,5.459" Grid.Row="1"/>
-        <TextBox Grid.Column="1" TextWrapping="Wrap" Text="{Binding Book.Title, Mode=TwoWay}" Height="25" Margin="10.8,3.941,8.6,4.459" Grid.Row="1"/>
-        <TextBox Grid.Column="2" TextWrapping="Wrap" Text="{Binding Book.Genre.Title, Mode=TwoWay}" Height="25" Margin="10.4,3.941,9.4,5.459" Grid.Row="1"/>
-        <TextBox Grid.Column="3" TextWrapping="Wrap" Text="{Binding Book.PublicationYr, Mode=TwoWay}" Height="25" Margin="10.6,3.941,9.6,5.459" Grid.Row="1"/>
-        <TextBox Grid.Column="4" TextWrapping="Wrap" Text="{Binding Book.Comment, Mode=TwoWay}" Height="25" Margin="9.4,3.941,10,5.459" Grid.Row="1"/>
+        <TextBox Grid.Column="0" TextWrapping="Wrap" Text="{Binding Book.Author, Mode=TwoWay, ValidatesOnNotifyDataErrors = True}" Height="25" Width="180" VerticalAlignment="Center" Grid.Row="1"/>
+        <TextBox Grid.Column="1" TextWrapping="Wrap" Text="{Binding Book.Title, Mode=TwoWay, ValidatesOnNotifyDataErrors = True}" Height="25" Width="240" Grid.Row="1"/>
+        <!--<TextBox Grid.Column="2" TextWrapping="Wrap" Text="{Binding Book.Genre.Title, Mode=TwoWay}" Height="25" Width="200" Grid.Row="1"/>-->
+
+        <ComboBox ItemsSource="{Binding Path=Genres}"
+            DisplayMemberPath="Name"
+            SelectedValuePath="Name"
+            SelectedValue="{Binding Path=Genre.Title}"
+            Name="cmbGenres" Grid.Column="2" Height="25" Width="200" Grid.Row="1" >
+        </ComboBox>
+        <TextBox Grid.Column="3" TextWrapping="Wrap" Text="{Binding Book.PublicationYr, Mode=TwoWay}" Height="25" Width="75" Grid.Row="1"/>
+        <TextBox Grid.Column="4" TextWrapping="Wrap" Text="{Binding Book.Comment, Mode=TwoWay}" Height="25" Width="450" Grid.Row="1"/>
         <Button Content="Сохранить" FontSize="20" FontWeight="Bold" Grid.Row="2"
-                 Command="{Binding SaveCommand}" CommandParameter="{Binding Book}" Height="33" Margin="51.4,9.6,240,9.4" Grid.Column="4" />
+                 Command="{Binding SaveCommand}" CommandParameter="{Binding Book}" Height="33" Width="150" Margin="0,0,150,0" Grid.Column="4" />
         <Button Content="Удалить" FontSize="20" FontWeight="Bold" Grid.Row="2" Grid.Column="4"
-                 Command="{Binding DeleteCommand}" CommandParameter="{Binding Book}" Height="33" Margin="266.4,8.6,25,10.4" />
+                 Command="{Binding DeleteCommand}" CommandParameter="{Binding Book}" Height="33" Width="150" Margin="250,0,0,0" />
     </Grid>
 </UserControl>
 

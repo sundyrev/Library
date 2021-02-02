@@ -29,8 +29,23 @@ namespace HomeLibrary.Services
             return books;
         }
 
+        public ObservableCollection<Genre> GetGenres()
+        {
+            ObservableCollection<Genre> genres = new ObservableCollection<Genre>();
+
+            foreach (var item in context.Genres)
+            {
+                genres.Add(item);
+            }
+            return genres;
+        }
+
         public int CreateBook(Book book)
         {
+            if (string.IsNullOrEmpty(book.Title) || string.IsNullOrEmpty(book.Author))
+            {
+                return 0;
+            }
             context.Books.Add(book);
             context.SaveChanges();
             return book.Id;
